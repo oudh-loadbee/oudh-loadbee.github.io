@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AR Viewer</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+<a-scene vr-mode-ui="enabled: false">
+    <a-assets>
+        <!-- Define the 3D model -->
+        <a-asset-item id="model" src=""></a-asset-item>
+    </a-assets>
+
+    <a-marker preset="hiro">
+        <a-entity
+                gltf-model="#model"
+                scale="0.01 0.01 0.01"
+                position="0 0 0"
+        ></a-entity>
+    </a-marker>
+
+    <a-camera-static></a-camera-static>
+</a-scene>
+
+<script>
+    //http://localhost:63342/hive-v2/arserver.html?model=https://mediacdn.loadbee.com/catalogue/er555nmufhb27378/415X_Prep_CB_gltf-with-custom-properties.glb
+    // Get the model URL from the query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const modelUrl = urlParams.get('model');
+
+    // Set the model URL in the A-Frame asset item
+    const modelAssetItem = document.querySelector('#model');
+    modelAssetItem.setAttribute('src', modelUrl);
+</script>
+</body>
+</html>
