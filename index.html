@@ -9,20 +9,35 @@
     <a-scene embedded arjs="sourceType: webcam; trackingMethod: best;">
         <!-- Add your 3D model -->
         <a-entity
-            gltf-model=""
+            gltf-model="url(https://modelviewer.dev/shared-assets/models/Astronaut.glb)"
             scale="0.1 0.1 0.1"
             position="0 0 0"
             rotation="0 0 0"
             visible="false"
             gps-entity-place="latitude: 37.7749; longitude: -122.4194;"
-            ar-model="src: url(https://modelviewer.dev/shared-assets/models/Astronaut.glb)"
+            ar-model
         ></a-entity>
 
         <!-- Add your AR code -->
-        <a-camera
-            gps-camera
-            rotation-reader
-        ></a-camera>
+        <a-camera gps-camera rotation-reader></a-camera>
     </a-scene>
+
+    <script>
+        // Request device location
+        navigator.geolocation.getCurrentPosition(
+            function(position) {
+                // Update entity position based on current device location
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                const entity = document.querySelector('[gps-entity-place]');
+                entity.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+                entity.setAttribute('visible', true);
+            },
+            function(error) {
+                console.error('Error getting device location:', error);
+            }
+        );
+    </script>
 </body>
 </html>
