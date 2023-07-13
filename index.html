@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AR Viewer</title>
+    <title>AR Model Viewer</title>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ar.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body>
-<a-scene vr-mode-ui="enabled: false">
-    <a-assets>
-        <!-- Define the 3D model -->
-        <a-asset-item id="model" src=""></a-asset-item>
-    </a-assets>
-
-    <a-marker preset="hiro">
+    <a-scene embedded arjs="sourceType: webcam; trackingMethod: nft;">
+        <!-- Add your 3D model -->
         <a-entity
-                gltf-model="#model"
-                scale="0.01 0.01 0.01"
-                position="0 0 0"
+            gltf-model="url(https://mediacdn.loadbee.com/catalogue/er555nmufhb27378/415X_Prep_CB_gltf-with-custom-properties.glb)"
+            scale="0.1 0.1 0.1"
+            position="0 0 0"
+            visible="false"
+            nft-marker
         ></a-entity>
-    </a-marker>
 
-    <a-camera-static></a-camera-static>
-</a-scene>
-
-<script>
-    //http://localhost:63342/hive-v2/arserver.html?model=https://mediacdn.loadbee.com/catalogue/er555nmufhb27378/415X_Prep_CB_gltf-with-custom-properties.glb
-    // Get the model URL from the query parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const modelUrl = urlParams.get('model');
-
-    // Set the model URL in the A-Frame asset item
-    const modelAssetItem = document.querySelector('#model');
-    modelAssetItem.setAttribute('src', modelUrl);
-</script>
+        <!-- Add your AR code -->
+        <a-nft
+            type="nft"
+            url="https://"
+            smooth="true"
+            smoothCount="10"
+            smoothTolerance=".01"
+        >
+            <a-entity
+                camera
+                look-controls
+                arjs-hit-testing="enabled: true"
+            ></a-entity>
+        </a-nft>
+    </a-scene>
 </body>
 </html>
